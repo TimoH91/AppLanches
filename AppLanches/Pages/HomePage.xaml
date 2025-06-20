@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppLanches.Pages.HomePage">
 
-    <!--<Grid RowDefinitions="Auto,Auto,Auto,Auto,3*,Auto,4*"
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,3*,Auto,4*"
           RowSpacing="18"
           Margin="15">
 
@@ -24,8 +24,7 @@
         <CollectionView Grid.Row="2"
                         x:Name="CvCategorias"
                         SelectionMode="Single"
-                        --><!--SelectionChanged="CvCategorias_SelectionChanged"--><!--
-                        >
+                        SelectionChanged="CvCategorias_SelectionChanged">
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20"
@@ -37,10 +36,10 @@
                     <VerticalStackLayout>
                         <Image HeightRequest="80"
                                    WidthRequest="80"
-                                   Source="{Binding CaminhoImagem}"/>
+                                   Source="{Binding ImagePath}"/>
                         <Label HorizontalOptions="Center"
                                FontSize="Small"
-                               Text="{Binding Nome}"/>
+                               Text="{Binding Name}"/>
                     </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -70,7 +69,7 @@
                             <Image Aspect="Fill"
                                    HeightRequest="120"
                                    WidthRequest="120"
-                                   Source="{Binding CaminhoImagem}"/>
+                                   Source="{Binding ImagePath}"/>
 
                             <Label TextColor="White"
                                    HorizontalTextAlignment="Center"
@@ -80,7 +79,7 @@
                                    Padding="5,5"
                                    VerticalOptions="End"
                                    HorizontalOptions="FillAndExpand"
-                                   Text="{Binding Nome}"/>
+                                   Text="{Binding Name}"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -114,25 +113,25 @@
                             <Image Aspect="AspectFill"
                                        HeightRequest="120"
                                        WidthRequest="120"
-                                       Source="{Binding CaminhoImagem}"/>
+                                       Source="{Binding ImagePath}"/>
                             <Label Grid.Row="1"
                                    FontAttributes="Bold"
                                    LineBreakMode="WordWrap"
                                    MaxLines="2"
                                    HorizontalTextAlignment="Center"
                                    VerticalTextAlignment="Center"
-                                   Text="{Binding Nome}"/>
+                                   Text="{Binding Name}"/>
                             <Label Grid.Row="2"
                                    FontAttributes="Bold"
                                    HorizontalTextAlignment="Center"
                                    VerticalTextAlignment="Center"
-                                   Text="{Binding Preco,StringFormat='R$ {0:F2}'}" />
+                                   Text="{Binding Price,StringFormat='R$ {0:F2}'}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </Grid>-->
+    </Grid>
 
 </ContentPage>

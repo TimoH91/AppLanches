@@ -11,7 +11,7 @@
        Shell.TabBarUnselectedColor="FloralWhite">
 
 
-    <TabBar>
+    <!--<TabBar>
         <Tab Title="Home"
              Icon="home">
             <ShellContent ContentTemplate="{DataTemplate pages:HomePage}" />
@@ -28,6 +28,6 @@
              Icon="profile">
             <ShellContent ContentTemplate="{DataTemplate pages:ProfilePage}" />
         </Tab>
-    </TabBar>
+    </TabBar>-->
 
 </Shell>

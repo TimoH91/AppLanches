@@ -14,8 +14,8 @@ namespace AppLanches
             InitializeComponent();
             _apiService = apiService;
             _validator = validator;
-
-            SetMainPage();
+            MainPage = new NavigationPage(new InscriptionPage(_apiService, _validator));
+            //SetMainPage();
         }
 
         private void SetMainPage()

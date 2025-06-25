@@ -16,7 +16,7 @@ public partial class HomePage : ContentPage
     {
         InitializeComponent();
         _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
-        LblNomeUsuario.Text = "Olá, " + Preferences.Get("usuarionome", string.Empty);
+        LblNomeUsuario.Text = "Olá, " + Preferences.Get("username", string.Empty);
         _validator = validator;
         Title = AppConfig.tituloHomePage;
     }
@@ -137,11 +137,34 @@ public partial class HomePage : ContentPage
 
     private void CvMaisVendidos_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if (sender is CollectionView collectionView)
+        {
+            NavigateToProdutoDetalhesPage(collectionView, e);
+        }
 
     }
 
     private void CvPopulares_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if (sender is CollectionView collectionView)
+        {
+            NavigateToProdutoDetalhesPage(collectionView, e);
+        }
+
+    }
+
+    private void NavigateToProdutoDetalhesPage(CollectionView collectionView, SelectionChangedEventArgs e)
+    {
+        var currentSelection = e.CurrentSelection.FirstOrDefault() as Product;
+
+        if (currentSelection == null)
+            return;
+
+        Navigation.PushAsync(new ProductsDetailsPage(
+                                 currentSelection.Id, currentSelection.Name!, _apiService, _validator
+        ));
+
+        collectionView.SelectedItem = null;
 
     }
 }

@@ -11,9 +11,10 @@ namespace AppLanches
 
         public AppShell(ApiService apiService, IValidator validator)
         {
-            InitializeComponent();
+            //InitializeComponent();
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _validator = validator;
+
             ConfigureShell();
         }
 

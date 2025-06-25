@@ -124,7 +124,7 @@ public class ApiService
         //string endpoint = $"api/Products?typeProduct={tipoProduto}&categoryId={categoriaId}";
         //return await GetAsync<List<Product>>(endpoint);
 
-        string endpoint = $"api/Products?search={tipoProduto}";
+        string endpoint = $"api/Products?search={tipoProduto}&categoryId={categoriaId}";
         return await GetAsync<List<Product>>(endpoint);
     }
 

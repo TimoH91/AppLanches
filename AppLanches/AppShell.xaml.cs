@@ -23,6 +23,7 @@ namespace AppLanches
             var carrinhoPage = new ShoppingCartPage();
             var favoritosPage = new FavouritesPage();
             var perfilPage = new ProfilePage();
+            //var productsListPage = new ProductsListPage();
 
             Items.Add(new TabBar
             {

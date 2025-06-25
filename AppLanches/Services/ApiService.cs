@@ -184,4 +184,10 @@ public class ApiService
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
     }
+
+    public async Task<(Product? ProdutoDetalhe, string? ErrorMessage)> GetProdutoDetalhe(int produtoId)
+    {
+        string endpoint = $"api/products/{produtoId}";
+        return await GetAsync<Product>(endpoint);
+    }
 }

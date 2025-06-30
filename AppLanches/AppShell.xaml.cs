@@ -11,7 +11,7 @@ namespace AppLanches
 
         public AppShell(ApiService apiService, IValidator validator)
         {
-            //InitializeComponent();
+            InitializeComponent();
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _validator = validator;
 
@@ -21,7 +21,7 @@ namespace AppLanches
         private void ConfigureShell()
         {
             var homePage = new HomePage(_apiService, _validator);
-            var carrinhoPage = new ShoppingCartPage();
+            var carrinhoPage = new ShoppingCartPage(_apiService, _validator);
             var favoritosPage = new FavouritesPage();
             var perfilPage = new ProfilePage();
             //var productsListPage = new ProductsListPage();

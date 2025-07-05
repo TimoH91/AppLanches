@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AppLanches.Models;
+using SQLite;
 
 namespace AppLanches.Services
 {
@@ -22,7 +23,7 @@ namespace AppLanches.Services
         {
             try
             {
-                return await _database.Table<FavouriteProduct>().Where(p => p.ProdutoId == id).FirstOrDefaultAsync();
+                return await _database.Table<FavouriteProduct>().Where(p => p.Id == id).FirstOrDefaultAsync();
             }
             catch (Exception)
             {

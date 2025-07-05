@@ -3,6 +3,7 @@ using AppLanches.Services;
 using AppLanches.Validations;
 using AppLanches.Models;
 using AppLanches.Pages;
+using System.Diagnostics;
 
 namespace AppLanches.Pages;
 
@@ -11,22 +12,56 @@ public partial class HomePage : ContentPage
     private readonly ApiService _apiService;
     private readonly IValidator _validator;
     private bool _loginPageDisplayed = false;
+    private bool _isDataLoaded = false;
 
     public HomePage(ApiService apiService, IValidator validator)
     {
-        InitializeComponent();
+        InitializeComponent();    
         _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
         LblNomeUsuario.Text = "Olá, " + Preferences.Get("username", string.Empty);
         _validator = validator;
         Title = AppConfig.tituloHomePage;
+
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await GetListaCategorias();
-        await GetMaisVendidos();
-        await GetPopulares();
+
+        await TestDevTunnel();
+
+        if (!_isDataLoaded)
+        {
+            await LoadDataAsync();
+            _isDataLoaded = true;
+        }
+    }
+
+    private async Task TestDevTunnel()
+    {
+        try
+        {
+            var client = new HttpClient();
+            var url = "https://n1lx9580-7213.uks1.devtunnels.ms/api/health"; // or your known endpoint
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Success: " + content);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Error: " + ex);
+        }
+    }
+
+
+    private async Task LoadDataAsync()
+    {
+        var categoriasTask = GetListaCategorias();
+        var maisVendidosTask = GetMaisVendidos();
+        var popularesTask = GetPopulares();
+
+        await Task.WhenAll(categoriasTask, maisVendidosTask, popularesTask);
     }
 
     private async Task<IEnumerable<Category>> GetListaCategorias()

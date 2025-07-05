@@ -22,7 +22,7 @@ namespace AppLanches
         {
             var homePage = new HomePage(_apiService, _validator);
             var carrinhoPage = new ShoppingCartPage(_apiService, _validator);
-            var favoritosPage = new FavouritesPage();
+            var favoritosPage = new FavouritesPage(_apiService, _validator);
             var perfilPage = new ProfilePage();
             //var productsListPage = new ProductsListPage();
 

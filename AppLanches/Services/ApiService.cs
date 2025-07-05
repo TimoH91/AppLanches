@@ -66,6 +66,36 @@ public class ApiService
             return new ApiResponse<bool> { ErrorMessage = ex.Message };
         }
     }
+
+
+    public async Task<ApiResponse<bool>> ConfirmarPedido(Order pedido)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(pedido, _serializerOptions);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await PostRequest("api/Orders", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorMessage = response.StatusCode == HttpStatusCode.Unauthorized
+                    ? "Unauthorized"
+                    : $"Erro ao enviar requisição HTTP: {response.StatusCode}";
+
+                _logger.LogError($"Erro ao enviar requisição HTTP: {response.StatusCode}");
+                return new ApiResponse<bool> { ErrorMessage = errorMessage };
+            }
+            return new ApiResponse<bool> { Data = true };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Erro ao confirmar pedido: {ex.Message}");
+            return new ApiResponse<bool> { ErrorMessage = ex.Message };
+        }
+    }
+
+
     public async Task<ApiResponse<bool>> Login(string email, string password)
     {
         try
@@ -229,7 +259,7 @@ public class ApiService
         try
         {
             var content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
-            var response = await PutRequest($"api/ShoppingCartItems?produtoId={produtoId}&acao={acao}", content);
+            var response = await PutRequest($"api/ShoppingCartItems?productId={produtoId}&action={acao}", content);
             if (response.IsSuccessStatusCode)
             {
                 return (true, null);
@@ -275,6 +305,9 @@ public class ApiService
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
     }
+
+
+
     //private async Task<HttpResponseMessage> PostRequest(string uri, HttpContent content)
     //{
     //    var enderecoUrl = AppConfig.BaseUrl + uri;

@@ -188,6 +188,7 @@
                            VerticalOptions="Center"
                            BackgroundColor="#18565f"
                            FontAttributes="Bold"
+                           FontSize="13"
                            TextColor="White" />
 
                     <Image Source="rightarrow"

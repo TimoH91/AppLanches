@@ -9,6 +9,9 @@ public partial class ProductsDetailsPage : ContentPage
     private readonly IValidator _validator;
     private int _produtoId;
     private bool _loginPageDisplayed = false;
+    private FavouritesService _favoritosService = new FavouritesService();
+
+    private string? _imagemUrl;
 
     public ProductsDetailsPage(int produtoId,
                                 string produtoNome,
@@ -27,6 +30,7 @@ public partial class ProductsDetailsPage : ContentPage
     {
         base.OnAppearing();
         await GetProdutoDetalhes(_produtoId);
+        AtualizaFavoritoButton();
     }
 
     private async Task<Product?> GetProdutoDetalhes(int produtoId)
@@ -55,6 +59,7 @@ public partial class ProductsDetailsPage : ContentPage
             LblProdutoPreco.Text = produtoDetalhe.Price.ToString();
             LblProdutoDescricao.Text = produtoDetalhe.Detail;
             LblPrecoTotal.Text = produtoDetalhe.Price.ToString();
+            _imagemUrl = produtoDetalhe.ImagePath;
         }
         else
         {
@@ -77,9 +82,46 @@ public partial class ProductsDetailsPage : ContentPage
         await Navigation.PushAsync(new LoginPage(_apiService, _validator));
     }
 
-    private void ImagemBtnFavorito_Clicked(object sender, EventArgs e)
+    private async void ImagemBtnFavorito_Clicked(object sender, EventArgs e)
     {
+        try
+        {
+            var existeFavorito = await _favoritosService.ReadAsync(_produtoId);
+            if (existeFavorito is not null)
+            {
+                await _favoritosService.DeleteAsync(existeFavorito);
+            }
+            else
+            {
+                var produtoFavorito = new FavouriteProduct()
+                {
+                    Id = _produtoId,
+                    IsFavourite = true,
+                    Detail = LblProdutoDescricao.Text,
+                    Name = LblProdutoNome.Text,
+                    Price = Convert.ToDecimal(LblProdutoPreco.Text),
+                    UrlImage = _imagemUrl
+                };
 
+                await _favoritosService.CreateAsync(produtoFavorito);
+            }
+            AtualizaFavoritoButton();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Ocorreu um erro: {ex.Message}", "OK");
+        }
+    }
+
+    private async void AtualizaFavoritoButton()
+    {
+        var existeFavorito = await
+               _favoritosService.ReadAsync(_produtoId);
+
+        if (existeFavorito is not null)
+            ImagemBtnFavorito.Source = "heartfill";
+        else
+            ImagemBtnFavorito.Source = "heart";
     }
 
     private void BtnRemove_Clicked(object sender, EventArgs e)

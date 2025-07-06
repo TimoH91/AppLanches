@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using AppLanches.Services;
 using AppLanches.Validations;
+using CommunityToolkit.Maui;
 
 
 namespace AppLanches
@@ -11,15 +12,13 @@ namespace AppLanches
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+            .UseMauiApp<App>()
+            .UseMauiCommunityToolkit() // ✅ THIS is critical
+            .ConfigureFonts();
+
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             builder.Services.AddHttpClient();
             builder.Services.AddSingleton<ApiService>();

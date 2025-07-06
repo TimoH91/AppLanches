@@ -63,10 +63,12 @@ public partial class ProfilePage : ContentPage
     }
     private void MinhaConta_Tapped(object sender, TappedEventArgs e)
     {
+        Navigation.PushAsync(new MyAccountPage(_apiService));
     }
 
     private void Perguntas_Tapped(object sender, TappedEventArgs e)
     {
+        Navigation.PushAsync(new FAQPage());
     }
 
     private void BtnLogout_Clicked(object sender, EventArgs e)

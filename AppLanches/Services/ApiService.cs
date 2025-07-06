@@ -258,7 +258,7 @@ public class ApiService
 
     public async Task<(ProfileImage? ImagemPerfil, string? ErrorMessage)> GetImagemPerfilUsuario()
     {
-        string endpoint = "api/usuarios/ImagemPerfilUsuario";
+        string endpoint = "api/Users/imageprofile";
         return await GetAsync<ProfileImage>(endpoint);
     }
     public async Task<(bool Data, string? ErrorMessage)> AtualizaQuantidadeItemCarrinho(int produtoId, string acao)

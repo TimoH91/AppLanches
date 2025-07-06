@@ -16,7 +16,7 @@ public partial class FavouritesPage : ContentPage
 
     {
         InitializeComponent();
-        _favoritosService = new FavouritesService();
+        _favoritosService = ServiceFactory.CreateFavouritesService();
         _apiService = apiService;
         _validator = validator;
     }

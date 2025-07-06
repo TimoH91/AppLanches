@@ -254,6 +254,11 @@ public class ApiService
         }
     }
 
+    public async Task<(ProfileImage? ImagemPerfil, string? ErrorMessage)> GetImagemPerfilUsuario()
+    {
+        string endpoint = "api/usuarios/ImagemPerfilUsuario";
+        return await GetAsync<ProfileImage>(endpoint);
+    }
     public async Task<(bool Data, string? ErrorMessage)> AtualizaQuantidadeItemCarrinho(int produtoId, string acao)
     {
         try
@@ -303,6 +308,32 @@ public class ApiService
         {
             _logger.LogError($"Erro ao enviar requisição PUT para {uri}: {ex.Message}");
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
+        }
+    }
+
+    public async Task<ApiResponse<bool>> UploadImagemUsuario(byte[] imageArray)
+    {
+        try
+        {
+            var content = new MultipartFormDataContent();
+            content.Add(new ByteArrayContent(imageArray), "imagem", "image.jpg");
+            var response = await PostRequest("api/Users/uploadfoto", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorMessage = response.StatusCode == HttpStatusCode.Unauthorized
+                  ? "Unauthorized"
+                  : $"Erro ao enviar requisição HTTP: {response.StatusCode}";
+
+                _logger.LogError($"Erro ao enviar requisição HTTP: {response.StatusCode}");
+                return new ApiResponse<bool> { ErrorMessage = errorMessage };
+            }
+            return new ApiResponse<bool> { Data = true };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Erro ao fazer upload da imagem do usuário: {ex.Message}");
+            return new ApiResponse<bool> { ErrorMessage = ex.Message };
         }
     }
 

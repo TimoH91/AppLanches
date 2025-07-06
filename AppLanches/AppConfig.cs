@@ -10,5 +10,6 @@ namespace AppLanches
     {
         public static readonly string BaseUrl = "https://x0lj1p5p-7213.uks1.devtunnels.ms/";
         public static readonly string tituloHomePage = "Lanches Mac";
+        public static readonly string PerfilImagemPadrao = "Resources/Images/user1.jpeg";
     }
 }

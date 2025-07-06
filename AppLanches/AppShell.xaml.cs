@@ -23,7 +23,7 @@ namespace AppLanches
             var homePage = new HomePage(_apiService, _validator);
             var carrinhoPage = new ShoppingCartPage(_apiService, _validator);
             var favoritosPage = new FavouritesPage(_apiService, _validator);
-            var perfilPage = new ProfilePage();
+            var perfilPage = new ProfilePage(_apiService, _validator);
             //var productsListPage = new ProductsListPage();
 
             Items.Add(new TabBar

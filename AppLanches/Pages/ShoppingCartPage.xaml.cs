@@ -111,7 +111,17 @@ public partial class ShoppingCartPage : ContentPage
 
             foreach (var item in itensCarrinhoCompra)
             {
-                ItensCarrinhoCompra.Add(item);
+                var (product, error) = await _apiService.GetProdutoDetalhe(item.ProductId);
+
+                if (product != null)
+                {
+                    item.UrlImage = product.UrlImage;
+                    ItensCarrinhoCompra.Add(item);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             CvCarrinho.ItemsSource = ItensCarrinhoCompra;

@@ -38,18 +38,18 @@
 
                             <Image Aspect="AspectFill"
                                    HeightRequest="130"
-                                   Source="{Binding ImagemUrl}" />
+                                   Source="{Binding UrlImage}" />
 
                             <Label Grid.Row="1"
                                FontAttributes="Bold"
                                LineBreakMode="WordWrap"
                                FontSize="12"    
                                MaxLines="2"
-                               Text="{Binding Nome}" />
+                               Text="{Binding Name}" />
 
                             <Label Grid.Row="2"
                                FontAttributes="Bold"
-                               Text="{Binding Preco,StringFormat='R$ {0:F2}'}" />
+                               Text="{Binding Price,StringFormat='R$ {0:F2}'}" />
                         </Grid>
                     </Border>
                 </DataTemplate>

@@ -31,6 +31,8 @@ public class ApiService
         return await GetAsync<List<ShoppingCartItem>>(endpoint);
     }
 
+
+
     public async Task<ApiResponse<bool>> RegisterUser(string name, string email,
                                                           string telephone, string password)
     {
@@ -337,6 +339,20 @@ public class ApiService
         }
     }
 
+    public async Task<(List<OrderByUser>?, string? ErrorMessage)> GetPedidosPorUsuario(int usuarioId)
+    {
+
+        string endpoint = $"api/Orders/GetOrdersByUser/{usuarioId}";
+
+        return await GetAsync<List<OrderByUser>>(endpoint);
+    }
+
+    public async Task<(List<OrderDetail>?, string? ErrorMessage)> GetPedidoDetalhes(int pedidoId)
+    {
+        string endpoint = $"api/Orders/GetOrderDetails/{pedidoId}";
+
+        return await GetAsync<List<OrderDetail>>(endpoint);
+    }
 
 
     //private async Task<HttpResponseMessage> PostRequest(string uri, HttpContent content)

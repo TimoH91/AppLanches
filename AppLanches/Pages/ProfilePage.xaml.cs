@@ -12,7 +12,7 @@ public partial class ProfilePage : ContentPage
     public ProfilePage(ApiService apiService, IValidator validator)
     {
         InitializeComponent();
-        LblNomeUsuario.Text = Preferences.Get("usuarionome", string.Empty);
+        //LblNomeUsuario.Text = Preferences.Get("username", string.Empty);
         _apiService = apiService;
         _validator = validator;
     }
@@ -21,6 +21,7 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
         ImgBtnPerfil.Source = await GetImagemPerfil();
+        LblNomeUsuario.Text = Preferences.Get("username", string.Empty);
     }
 
     private async Task<string?> GetImagemPerfil()
@@ -58,6 +59,7 @@ public partial class ProfilePage : ContentPage
 
     private void TapPedidos_Tapped(object sender, TappedEventArgs e)
     {
+        Navigation.PushAsync(new OrdersPage(_apiService, _validator));
     }
     private void MinhaConta_Tapped(object sender, TappedEventArgs e)
     {
